@@ -11,8 +11,11 @@
 ## Basic calculations (addition, subtraction, multiplication, division, and percentages)    ❌
 ## Typing in Rivals chat, being able to work out which chat it's in                         Chat ✅ Smart Chat ❌
 ## Skipping songs, playing and pausing                                                      ✅
-## some miscellaneous commands like pinging a website, coin flipping                        ✅
-## sit in system tray and not bother me by being on the taskbar                             ✅
+## Some miscellaneous commands like pinging a website, coin flipping                        ✅
+## Sit in system tray and not bother me by being on the taskbar                             ✅
+## Muting                                                                                   ❌
+## A modular THRESHER plugin system                                                         ❌
+## A settings page                                                                          ❌
 
 ## POTENTIAL FUTURE CAPABILITIES:
 ## Being able say what song is playing (Integration with Trixinous/CiderSongMonitor)
