@@ -1,8 +1,18 @@
 import random
 import ping3
 import webbrowser
+import sys
+import os
 from win10toast import ToastNotifier
 toast = ToastNotifier()
+
+
+try:
+    base_path = sys._MEIPASS
+except Exception:
+    base_path = os.path.abspath(".")
+
+icon_path = os.path.join(base_path, "res", ".ico", "THRESHER.ico")
 
 ## The Coinflip Function
 def coinflip():
@@ -13,7 +23,7 @@ def coinflip():
             "Coin Flip",
             "Coin Flip returned Heads",
             duration = 20,
-            icon_path = "./res/.ico/THRESHER.ico",
+            icon_path = icon_path,
             threaded = True,
         )
     elif result >= 51:
@@ -22,7 +32,7 @@ def coinflip():
             "Coin Flip",
             "Coin Flip returned Tails",
             duration = 20,
-            icon_path = "./res/.ico/THRESHER.ico",
+            icon_path = icon_path,
             threaded = True,
         )
 
