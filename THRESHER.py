@@ -16,6 +16,7 @@
 ## Muting                                                                                   ❌
 ## A modular THRESHER plugin system                                                         ❌
 ## A settings page                                                                          ❌
+## A wake hotkey                                                                            ❌
 
 ## POTENTIAL FUTURE CAPABILITIES:
 ## Being able say what song is playing (Integration with Trixinous/CiderSongMonitor)

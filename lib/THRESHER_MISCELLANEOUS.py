@@ -1,14 +1,30 @@
 import random
 import ping3
 import webbrowser
+from win10toast import ToastNotifier
+toast = ToastNotifier()
 
 ## The Coinflip Function
 def coinflip():
     result = random.randrange(1,100)
     if result < 50:
         print("Heads")
+        toast.show_toast(
+            "Coin Flip",
+            "Coin Flip returned Heads",
+            duration = 20,
+            icon_path = "./res/.ico/THRESHER.ico",
+            threaded = True,
+        )
     elif result >= 51:
         print("Tails")
+        toast.show_toast(
+            "Coin Flip",
+            "Coin Flip returned Tails",
+            duration = 20,
+            icon_path = "./res/.ico/THRESHER.ico",
+            threaded = True,
+        )
 
 ## The Ping Function
 def ping():
