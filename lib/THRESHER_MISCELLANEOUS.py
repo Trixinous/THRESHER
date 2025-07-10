@@ -3,8 +3,9 @@ import ping3
 import webbrowser
 import sys
 import os
-from win10toast import ToastNotifier
-toast = ToastNotifier()
+from lib import THRESHER_TOAST_W10T_P as ToastModule
+#from win10toast_persist import ToastNotifier
+
 
 
 try:
@@ -12,29 +13,32 @@ try:
 except Exception:
     base_path = os.path.abspath(".")
 
-icon_path = os.path.join(base_path, "res", ".ico", "THRESHER.ico")
+T_icon_path = os.path.join(base_path, "res", ".ico", "THRESHER.ico")
+
+print(f"Attempting to load icon from: {T_icon_path}") # debugstring
+
+# winotify, handles Windows Toasts
+def show_winotify_toast(title, message):
+    toaster = ToastModule.ToastNotifier()
+    toaster.show_toast(
+        title,
+        message,
+        icon_path= T_icon_path,
+        duration=5,
+        threaded=True,
+    )
+
+
 
 ## The Coinflip Function
 def coinflip():
     result = random.randrange(1,100)
     if result < 50:
         print("Heads")
-        toast.show_toast(
-            "Coin Flip",
-            "Coin Flip returned Heads",
-            duration = 20,
-            icon_path = icon_path,
-            threaded = True,
-        )
+        show_winotify_toast("Coin Flip", "Coin Flip returned Heads")
     elif result >= 51:
         print("Tails")
-        toast.show_toast(
-            "Coin Flip",
-            "Coin Flip returned Tails",
-            duration = 20,
-            icon_path = icon_path,
-            threaded = True,
-        )
+        show_winotify_toast("Coin Flip", "Coin Flip returned Tails")
 
 ## The Ping Function
 def ping():

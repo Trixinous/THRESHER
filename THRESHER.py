@@ -72,8 +72,8 @@ current_icon_state = "THRESHER"
 DEFAULT_CONFIG = {
     "obs_token": "",
     "wake_words": ["thresher", "thresh", "thrash", "thrasher"],
-    "THRESHER_version": "20250224-2"
-    "THRESHER_internal_version: 1" # Does not correspond to the actual update, is just incremented whenever the version is updated - Used to check whether new things need to be written to the Registry.
+    "THRESHER_version": "20250710"
+    "THRESHER_internal_version: 3" # Does not correspond to the actual update, is just incremented whenever the version is updated - Used to check whether new things need to be written to the Registry.
 }
 
 
