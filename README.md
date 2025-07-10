@@ -11,7 +11,8 @@ Basic calculations (addition, subtraction, multiplication, division, and percent
 Typing in Rivals chat, being able to work out which chat it's in ----------------------- Chat ✅ Smart Chat ❌  
 Skipping songs, playing and pausing ---------------------------------------------------- ✅  
 some miscellaneous commands like pinging a website, coin flipping ---------------------- ✅  
-sit in system tray and not bother me by being on the taskbar --------------------------- ✅   
+sit in system tray and not bother me by being on the taskbar --------------------------- ✅
+Toasts---------------------------------------------------------------------------------- ✅ (Coin Flip only, may be added for other modules in the future)
 ```  
 ## POTENTIAL FUTURE CAPABILITIES:  
 ```
@@ -32,7 +33,8 @@ Hardware Monitoring will be in:  THRESHER_HW_MONITOR     .py
 Inbuilt Calculator will be in:   THRESHER_CALCULATOR     .py  
 Marvel Rivals Chat will be in:   THRESHER_RIVALS_CHAT    .py  
 Media Control will be in:        THRESHER_MEDIA_CONTROL  .py  
-Miscellaneous stuff will be in:  THRESHER_MISCELLANEOUS  .py  
+Miscellaneous stuff will be in:  THRESHER_MISCELLANEOUS  .py
+Toast notifications will be in:  THRESHER_W10T_P         .py
   
 THRESHER's modules are stored within /THRESHER/lib  
   
