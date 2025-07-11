@@ -62,6 +62,7 @@ import sys
 import winreg
 import json
 from PIL import Image
+from aumid_manager import AUMIDManager, send_toast_notification
 
 
 speech_recognition_running = True
@@ -72,13 +73,14 @@ current_icon_state = "THRESHER"
 DEFAULT_CONFIG = {
     "obs_token": "",
     "wake_words": ["thresher", "thresh", "thrash", "thrasher"],
-    "THRESHER_version": "20250710"
-    "THRESHER_internal_version: 3" # Does not correspond to the actual update, is just incremented whenever the version is updated - Used to check whether new things need to be written to the Registry.
+    "THRESHER_version": "20250711",
+    "THRESHER_internal_version": "4" # Does not correspond to the actual update, is just incremented whenever the version is updated - Used to check whether new things need to be written to the Registry.
 }
 
 
 ## Command Tuple Library - This is the group of tuples for commands
-google_commands = ("google", "show me", "convert", "search", "who", "whom", "whose", "what", "why", "when", "where", "are", "how")
+google_commands = ("google", "show me", "convert", "search", "whose", "what", "why", "when", "where", "are", "how")
+wikipedia_person_commands = ("who", "whom")
 hw_monitor_commands = ()
 OBS_commands = ("clip that", "clip", "start recording", "stop recording")
 calculator_commands = ()
@@ -98,18 +100,48 @@ class TextRedirector(object):  # Custom stdout object
     def flush(self):  # For compatibility with some streams
         pass
 
+class YourApp:
+    def __init__(self):
+        # Setup AUMID on app initialization
+        self.aumid_manager = AUMIDManager()
+        self.setup_complete = self.aumid_manager.ensure_aumid_registered()
+        
+    def notify_user(self, title, message):
+        if self.setup_complete:
+            send_toast_notification(title, message)
+        else:
+            print(f"Notification: {title} - {message}")  # Fallback
+
 def recognised_commands(passed_command):
     print("A command has been passed to the recognised_commands list. Checking:")
     '''
     Google Commands. 
-    Recognises phrases like "google", "show me", "convert", "search" "who", "whom, whose, what, why, when, where, are and how and passes it to google_search_module
+    Recognises phrases like "google", "show me", "convert", "search", whose, what, why, when, where, are and how and passes it to google_search_module
     '''
  
     if any(passed_command.lower().startswith(word) for word in google_commands):
         print("Command recognised as Google command! Searching Google...")
         google_search_module.perform_google_search(True, passed_command)
-    
+
     '''
+    Wikipedia Person Search commands
+    Recognises phrases like  "who" and "whom", and passes it to the Wikipedia search in google_search_module
+    '''
+    if any(passed_command.lower().startswith(word) for word in wikipedia_person_commands):
+        print("Command recognised as Wikipedia Person Search Command! Searching Wikipedia...")
+        wiki_returned_name = google_search_module.format_name_for_wiki_search(True, passed_command)
+        wiki_description, wiki_name = google_search_module.perform_wiki_search(True, wiki_returned_name, 2)
+        if wiki_description != None:
+            if wiki_name != None:
+                miscellaneous_module.show_winotify_toast(wiki_name, wiki_description)
+                print("Toaster Popped:")
+                print(wiki_name)
+                print(wiki_description)
+            else: 
+                print("Error in Wikipedia Search: Name malformed, No result provided. May be due to bad audio read or the person is not on Wikipedia.")
+        else:
+            print("Error in Wikipedia Search: Description malformed, No result provided. May be due to bad audio read or the person is not on Wikipedia.")
+    ''' 
     Hardware Monitoring Commands. 
     Recognises phrases like "system temp", "system specs", "cpu temp", "cpu load", "gpu temp", "gpu load", "task manager"
     '''
@@ -410,7 +442,14 @@ def text_to_speech():
 
 def main_function():
     global root, terminal_visible, console_window_handle, gui_visible, icon_thread, speech_thread, icon
-    
+
+    aumid_manager = AUMIDManager()
+    setup_complete = aumid_manager.ensure_aumid_registered()
+    if setup_complete:
+        print("AUMID registration successful")
+    else:
+        print("AUMID registration failed - notifications may not work properly")
+
     gui_visible = False
     terminal_visible = False  # Initialize terminal visibility flag
     root = tk.Tk()  # Tkinter root window
@@ -450,3 +489,4 @@ def main_function():
 
 if __name__ == "__main__":
     main_function()
+

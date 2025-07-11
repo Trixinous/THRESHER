@@ -3,7 +3,8 @@ import ping3
 import webbrowser
 import sys
 import os
-from lib import THRESHER_TOAST_W10T_P as ToastModule
+#from lib import THRESHER_TOAST_W10T_P as ToastModule
+from windows_toasts import Toast, WindowsToaster, ToastDisplayImage
 #from win10toast_persist import ToastNotifier
 
 
@@ -13,21 +14,26 @@ try:
 except Exception:
     base_path = os.path.abspath(".")
 
-T_icon_path = os.path.join(base_path, "res", ".ico", "THRESHER.ico")
+T_icon_path = os.path.join(base_path, "res", "img", "ico", "THRESHER_128.png")
 
 print(f"Attempting to load icon from: {T_icon_path}") # debugstring
 
 # winotify, handles Windows Toasts
 def show_winotify_toast(title, message):
-    toaster = ToastModule.ToastNotifier()
-    toaster.show_toast(
-        title,
-        message,
-        icon_path= T_icon_path,
-        duration=5,
-        threaded=True,
-    )
-
+   # toaster = ToastModule.ToastNotifier()
+   # toaster.show_toast(
+   #     title,
+   #     message,
+   #     icon_path= T_icon_path,
+   #     duration=None,
+   #     threaded=True,
+   # )
+    toaster = WindowsToaster("Trixinous.App.THRESHER")
+    newToast = Toast()
+    newToast.text_fields = [title, message]
+    newToast.AddImage(ToastDisplayImage.fromPath(T_icon_path))
+    toaster.show_toast(newToast)
+    
 
 
 ## The Coinflip Function
